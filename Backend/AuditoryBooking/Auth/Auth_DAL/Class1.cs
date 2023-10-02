@@ -1,0 +1,6 @@
+﻿namespace Auth_DAL;
+
+public class Class1
+{
+
+}
