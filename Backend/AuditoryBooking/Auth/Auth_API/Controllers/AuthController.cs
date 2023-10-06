@@ -9,19 +9,27 @@ namespace Auth_API;
 [Route("api/auth/")]
 public class AuthController:ControllerBase
 {
-    [HttpPost("register")] //mb return TokenPair
-    public  Task<IActionResult> SignUp(RegistrationRequest request){
+    private readonly IAuthService _authService;
+    public AuthController(IAuthService authService){
+        _authService=authService;
+    }
+
+
+    [HttpPost("register")] 
+    public  async Task<IActionResult> SignUp (RegistrationRequest request){
         try{
-            throw new NotImplementedException();
+            await _authService.SignUp(request);
+            return Ok();
         }
         catch(Exception e){
             throw;
         }
     }
 
-    [HttpPost("login")]
-    public Task<ActionResult<TokenPairDTO>> SignIn(LoginRequest request){
+    [HttpPost("login")]//return refresh Token
+    public async Task<ActionResult<Token>> SignIn(LoginRequest request){
         try{
+            return await _authService.SignIn(request);
             throw new NotImplementedException();
         }
         catch(Exception e){
@@ -34,6 +42,8 @@ public class AuthController:ControllerBase
     public async Task<IActionResult> Logout (bool AllAccounts){
         try{
             throw new NotImplementedException();
+            //TODO Logout
+
         }
         catch(Exception e){
             throw;
@@ -42,10 +52,11 @@ public class AuthController:ControllerBase
 
 
     [HttpPost("refresh")]
-    [Authorize]
-    public Task<ActionResult<AccessTokenDTO>> Refresh(){
+    [Authorize]//should return AccessToken
+    public async Task<ActionResult<Token>> Refresh(){
         try{
-            throw new NotImplementedException();
+
+          return await  _authService.Refresh(User.Identity.Name);
         }
         catch(Exception e){
             throw;

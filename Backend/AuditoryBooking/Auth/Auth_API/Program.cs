@@ -1,8 +1,12 @@
+using Auth_API;
 using Auth_API.Common.Configuration;
 using Auth_DAL;
 using Auth_DAL.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,13 +20,35 @@ builder.Services.AddSwaggerGen();
 // builder.Services.AddDbContext<AuthDbContext>(options => { options.UseNpgsql(connectionString); });
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+
+            ValidateIssuer = true,
+            ValidIssuer = JwtConfigurations.Issuer,
+            ValidateAudience = true,
+            ValidAudience = JwtConfigurations.Audience,
+            ValidateLifetime = true,
+            IssuerSigningKey = JwtConfigurations.GetSymmetricSecurityKey(),
+            ValidateIssuerSigningKey = true,
+
+        };
+    });
+
+
 builder.Services.AddIdentity<UserExtended, IdentityRole>().AddEntityFrameworkStores <AuthDbContext>();
 
+builder.Services.AddScoped<IAuthService,AuthService>();
+builder.Services.AddScoped<IProfileService,ProfileService>();
+builder.Services.AddScoped<ITokenService,TokenService>();
+
+
+
+
 var app = builder.Build();
-
-
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

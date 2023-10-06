@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace Auth_Common.DTO.Auth;
 
 public class RegistrationRequest
@@ -15,4 +14,11 @@ public class RegistrationRequest
     public string Email {get;set;}
     [Required]
     public string Password {get;set;}
+    public string GetUserName(){
+        string UserName="";
+        if(!String.IsNullOrWhiteSpace(firstName)){UserName+=firstName;}
+        // if(!String.IsNullOrWhiteSpace(secondName)){UserName+=" "+secondName;}
+        // if(!String.IsNullOrWhiteSpace(lastName)){UserName+=" "+ lastName;}
+        return UserName;
+    }
 }

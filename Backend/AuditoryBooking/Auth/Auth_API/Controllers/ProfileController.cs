@@ -8,6 +8,13 @@ namespace Auth_API;
 [Route("api/profile/")]
 public class ProfileController:ControllerBase
 {
+    private readonly IProfileService _profileService;
+
+    public ProfileController(IProfileService profileService){
+        _profileService=profileService;
+    }
+
+
     [HttpGet]
     [Authorize]
     public async Task<ActionResult<ProfileDTO>> GetProfile(){
@@ -35,6 +42,7 @@ public class ProfileController:ControllerBase
     public async Task<IActionResult> UpdateProfile(){
         try{
             throw new NotImplementedException();
+            // TODO
         }
         catch(Exception e){
             throw;
