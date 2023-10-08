@@ -2,5 +2,7 @@
 
 public class ShortProfileDTO
 {
-    public string Username{get;set;}
+    public string firstName{get;set;}
+    public string secondName{get;set;}
+    public string lastName{get;set;}
 }

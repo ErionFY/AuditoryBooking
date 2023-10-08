@@ -14,23 +14,24 @@ public class ProfileController:ControllerBase
         _profileService=profileService;
     }
 
-
+    //ToDO create default role  , so only access token could be used on most calls
     [HttpGet]
-    [Authorize]
+    [Authorize] //Get user's profile
     public async Task<ActionResult<ProfileDTO>> GetProfile(){
         try{
-            throw new NotImplementedException();
+            var claims = HttpContext.User.Claims;
+            var userId = claims.First().Value;
+            return  await _profileService.GetProfile(userId);
         }
         catch(Exception e){
             throw;
         }
     }
 
-    [HttpGet("short")]
-    [Authorize]
-    public async Task<ActionResult<ShortProfileDTO>> GetShortProfile(){
+    [HttpGet("short")] //get profile of specified user
+    public async Task<ActionResult<ShortProfileDTO>> GetShortProfile(string userId){
         try{
-            throw new NotImplementedException();
+            return  await _profileService.GetShortProfile(userId);
         }
         catch(Exception e){
             throw;
@@ -42,7 +43,7 @@ public class ProfileController:ControllerBase
     public async Task<IActionResult> UpdateProfile(){
         try{
             throw new NotImplementedException();
-            // TODO
+            // TODO update profile
         }
         catch(Exception e){
             throw;

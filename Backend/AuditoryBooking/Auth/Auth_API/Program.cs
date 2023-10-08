@@ -41,6 +41,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddIdentity<UserExtended, IdentityRole>().AddEntityFrameworkStores <AuthDbContext>();
 
+
+
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IProfileService,ProfileService>();
 builder.Services.AddScoped<ITokenService,TokenService>();
@@ -57,7 +59,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
