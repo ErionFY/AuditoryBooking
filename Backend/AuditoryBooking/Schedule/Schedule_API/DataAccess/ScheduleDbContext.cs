@@ -10,7 +10,8 @@ public class ScheduleDbContext:DbContext
     public DbSet<Faculty> Faculties { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
-    public DbSet<Subject> Subject { get; set; }
+    public DbSet<Subject> Subjects { get; set; }
+    public DbSet<Professor> Professors { get; set; }
     
 
     public ScheduleDbContext(DbContextOptions options) : base(options)
