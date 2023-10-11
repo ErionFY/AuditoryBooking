@@ -21,7 +21,7 @@ builder.Services.AddDbContext<ScheduleDbContext>(options => { options.UseNpgsql(
 //TODO:вынести время таймера в Dev.json
 builder.Services.AddHostedService<RepeatingService>();
 builder.Services.AddSingleton<IInTimeApiParser, InTimeApiParser>();
-builder.Services.AddSingleton<IProfessorRepository, ProfessorRepository>();
+builder.Services.AddSingleton<IRepository, Repository>();
 
 builder.Services.AddHttpClient<IInTimeApiParser, InTimeApiParser>(client =>
 {
