@@ -17,7 +17,7 @@ public class RepeatingService:BackgroundService
         _repository = repository;
     }
 
-    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(30)); //TODO:Вынести в конфиг время и поменять на большее
+    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(50)); //TODO:Вынести в конфиг время и поменять на большее
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -34,25 +34,41 @@ public class RepeatingService:BackgroundService
         try
         {
             //Clean Database
+            
             await _repository.DeleteEntities();
 
-             await AddProfessors();
+          //  await AddProfessors();
+            
+          //  await AddBuildingsAndAudiences();
 
-             await AddFacultiesAndGroups();
+            var groupsIds= await AddFacultiesAndGroups();
 
-             await AddBuildingsAndAudiences();
-
-
+            foreach (var groupId in groupsIds)
+            {
+                 
+              var response =  await _inTimeApiParser.GetSchedule(groupId);
+                //Получаем расписание и сразу добавляем
+                // await _repository.AddSchedule(schedule);
+            }
+            
+            /* для каждой группы получить расписание за несколько месяцев назад ( 1 - 6 ) :
+             Получить Id Каждой существующей группы
+             Сделать соответствующий запрос
+             Получить респонс - распарсить
+             найти соответствующую Аудиторию и Преподователя,
+             проверить, существует ли такой предмет в БД, если нет - добавить
+             
+             Привязать расписание к этим 4-ём сущностям - группа, преподователь, аудитория предмет
+             
+             */
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
-        
 
-        
-        
+
         //Получить все расписание 
 
         //Распарсить всё и сложить в БД
@@ -68,14 +84,14 @@ public class RepeatingService:BackgroundService
 
     }
     
-    private async Task AddFacultiesAndGroups()
+    private async Task<ICollection<Guid>> AddFacultiesAndGroups()
     {
         var faculties =await _inTimeApiParser.GetFaculties();
         await _repository.AddFaculties(faculties);
         var facultiesIds = faculties.Select(f => f.id).ToList();
         ICollection<GroupDto>? groups = await _inTimeApiParser.GetGroups(facultiesIds);
         await _repository.AddGroups(groups);
-
+        return groups.Select(g => g.GroupId).ToList();
     }
 
     private async Task AddBuildingsAndAudiences()

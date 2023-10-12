@@ -53,10 +53,21 @@ public class InTimeApiParser:IInTimeApiParser
         return audiences;
     }
 
-    public Task GetSchedule()
+    public async Task<ICollection<ScheduleColumnInTime>> GetSchedule( Guid groupId) 
     {
-        Console.WriteLine("GettingSchedule");
-        throw new NotImplementedException();
+        //dateTo - current date
+        DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
+        string currentDate = dateNow.ToString("yyyy-MM-dd");;
+        
+        //dateFrom - current date - 1 month 
+
+        string dateFrom = dateNow.AddDays(-30).ToString("yyyy-MM-dd");
+        
+        
+        Console.WriteLine($"{currentDate} \n {dateFrom}");
+        
+        var response = await _httpClient.GetFromJsonAsync<ICollection<ScheduleColumnInTime>>($"v1/schedule/group?id={groupId}&dateFrom={dateFrom}&dateTo={currentDate}");
+        return response ;
     }
 
     public async Task<ICollection<GroupDto>?> GetGroups(List<string> facultiesIds)

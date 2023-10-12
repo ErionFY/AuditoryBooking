@@ -29,6 +29,8 @@ builder.Services.AddHttpClient<IInTimeApiParser, InTimeApiParser>(client =>
 });
 var app = builder.Build();
 
+//TODO: show Enums
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -7,7 +7,7 @@ namespace Schedule_API.Controllers;
 public class ScheduleController:ControllerBase
 {
     [HttpGet]
-    public Task<ActionResult<ICollection<Lesson>>> GetSchedule()//TODO: доделать endpoint'ы
+    public Task<ActionResult<ICollection<ScheduleColumnDto>>> GetSchedule(ScheduleType type,Guid id,DateOnly dateFrom , DateOnly dateTo)//TODO: доделать endpoint'ы
     {
         try
         {
