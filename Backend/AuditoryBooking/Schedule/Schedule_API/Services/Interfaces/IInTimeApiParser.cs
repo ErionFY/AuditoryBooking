@@ -9,7 +9,7 @@ public interface IInTimeApiParser
       Task<ICollection<ProfessorInTime>?> GetProfessors();
       Task<ICollection<FacultyInTime>?> GetFaculties();
       Task<IEnumerable<AudienceInTime>?> GetAudiences(List<string> buildingsIds);
-      Task<ICollection<ScheduleColumnInTime>> GetSchedule(Guid groupId);
+      Task<ICollection<ScheduleColumnInTime>?> GetSchedule(Guid groupId);
       Task<ICollection<GroupDto>?> GetGroups(List<string> facultiesIds);
       Task<ICollection<BuildingInTime>?> GetBuildings();
 }

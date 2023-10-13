@@ -17,7 +17,7 @@ public class RepeatingService:BackgroundService
         _repository = repository;
     }
 
-    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(50)); //TODO:Вынести в конфиг время и поменять на большее
+    private readonly PeriodicTimer _timer = new(TimeSpan.FromHours(6)); //TODO:Вынести в конфиг время и поменять на большее
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -37,18 +37,17 @@ public class RepeatingService:BackgroundService
             
             await _repository.DeleteEntities();
 
-          //  await AddProfessors();
+           await AddProfessors();
             
-          //  await AddBuildingsAndAudiences();
+           await AddBuildingsAndAudiences();
 
             var groupsIds= await AddFacultiesAndGroups();
 
             foreach (var groupId in groupsIds)
             {
-                 
-              var response =  await _inTimeApiParser.GetSchedule(groupId);
+                var response =  await _inTimeApiParser.GetSchedule(groupId);
                 //Получаем расписание и сразу добавляем
-                // await _repository.AddSchedule(schedule);
+                if (response != null) await _repository.AddSchedule(response);
             }
             
             /* для каждой группы получить расписание за несколько месяцев назад ( 1 - 6 ) :

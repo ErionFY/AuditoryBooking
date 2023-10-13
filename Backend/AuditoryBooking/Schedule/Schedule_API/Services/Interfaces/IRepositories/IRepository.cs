@@ -11,4 +11,5 @@ public interface IRepository
     Task AddGroups(ICollection<GroupDto>? groups);
     Task AddBuildings(ICollection<BuildingInTime> buildings);
     Task AddAudiences(IEnumerable<AudienceInTime> audiences);
+    Task AddSchedule(ICollection<ScheduleColumnInTime> schedule);
 }

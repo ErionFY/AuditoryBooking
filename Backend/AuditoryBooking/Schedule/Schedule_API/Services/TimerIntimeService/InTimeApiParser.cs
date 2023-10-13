@@ -53,7 +53,7 @@ public class InTimeApiParser:IInTimeApiParser
         return audiences;
     }
 
-    public async Task<ICollection<ScheduleColumnInTime>> GetSchedule( Guid groupId) 
+    public async Task<ICollection<ScheduleColumnInTime>?> GetSchedule( Guid groupId) 
     {
         //dateTo - current date
         DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);

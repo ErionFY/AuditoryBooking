@@ -28,7 +28,7 @@ public class TokenService:ITokenService
                                            signingCredentials: new SigningCredentials(JwtConfigurations.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-        //TODO adding refresh Tokens In database - > for login 
+        //TODO adding refresh Tokens In database - > for logout
 
         return new Token{
             tokenType=tokenType,

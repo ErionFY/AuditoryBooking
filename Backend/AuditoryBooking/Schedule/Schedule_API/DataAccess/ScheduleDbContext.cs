@@ -12,6 +12,7 @@ public class ScheduleDbContext:DbContext
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<Professor> Professors { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
     
 
     public ScheduleDbContext(DbContextOptions options) : base(options)

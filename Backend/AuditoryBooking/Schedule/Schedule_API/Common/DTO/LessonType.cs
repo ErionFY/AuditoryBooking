@@ -2,16 +2,16 @@
 
 public enum LessonType
 {
-    Lecture,
-    Practice,
-    Laboratory,
-    Seminar,
-    Individual,
-    ControlPoint,
-    Other,
-    DifferentialCredit,
-    Credit,
-    Consultation,
-    Exam,
-    Booking
+    LECTURE,
+    PRACTICE,
+    LABORATORY,
+    SEMINAR,
+    INDIVIDUAL,
+    CONTROL_POINT,
+    OTHER,
+    DIFFERENTIAL_CREDIT,
+    CREDIT,
+    CONSULTATION,
+    EXAM,
+    BOOKING
 }
