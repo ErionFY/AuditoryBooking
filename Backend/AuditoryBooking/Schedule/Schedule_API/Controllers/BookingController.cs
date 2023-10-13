@@ -47,7 +47,7 @@ public class BookingController:ControllerBase
         }
     }
     
-    [HttpGet("/staff")]
+    [HttpGet("staff")]
     [Authorize]//Roles="Admin, Staff"
     public Task<ActionResult<ICollection<BookingColumnStaffDto>>> GetBookingsForStaff(Guid audienceId,DateOnly dateFrom , DateOnly dateTo)
     {
